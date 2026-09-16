@@ -403,12 +403,18 @@ img {
 /* 8. Header -------------------------------------------------------- */
 
 .site-header {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  z-index: 30;
+  z-index: 100;
   padding-top: 0;
+  background: transparent;
+  transition: background-color 0.4s ease, backdrop-filter 0.4s ease;
+}
+.site-header.is-scrolled {
+  background: rgba(5, 7, 10, 0.72);
+  backdrop-filter: blur(10px);
 }
 
 .header-line {
@@ -560,26 +566,6 @@ img {
   width: 1px;
   height: 30px;
   background: linear-gradient(to bottom, var(--amber-soft), transparent);
-}
-
-/* ---------------------------------------------------------------- */
-/* Placeholder next section                                          */
-/* ---------------------------------------------------------------- */
-
-.placeholder-section {
-  min-height: 100vh;
-  background: var(--ink);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.placeholder-label {
-  font-family: var(--font-ui);
-  font-weight: 600;
-  font-size: 12px;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  color: var(--paper-faint);
 }
 
 /* ================================================================== */
