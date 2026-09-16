@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Anurag Patole — Project Manager, AI Builder, Author</title>
+<meta name="description" content="Cloud infrastructure by day. AI products and stories by night. The portfolio of Anurag Patole.">
+<meta name="theme-color" content="#05070a">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="css/hero.css">
+</head>
+<body>
+
+<!-- Hidden SVG defs: procedural noise for the wordmark + luminance-key cutout/grade filter for the photo -->
+<svg class="defs-svg" width="0" height="0" aria-hidden="true" focusable="false">
+  <defs>
+    <filter id="wordmarkNoise" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.012 0.9" numOctaves="4" seed="7" stitchTiles="stitch" result="noise"/>
+      <feColorMatrix in="noise" type="matrix"
+        values="0 0 0 0 0.96
+                0 0 0 0 0.64
+                0 0 0 0 0.14
+                0 0 0 0.55 0"/>
+    </filter>
+
+    <filter id="anuragCutout" color-interpolation-filters="sRGB" x="-6%" y="-6%" width="112%" height="112%">
+      <!-- luminance -> alpha, then a steep transfer to key out the near-white studio wall -->
+      <feColorMatrix in="SourceGraphic" type="luminanceToAlpha" result="lum"/>
+      <feComponentTransfer in="lum" result="key">
+        <feFuncA type="linear" slope="-12.5" intercept="11.25"/>
+      </feComponentTransfer>
+      <!-- composite first (hard cutout), THEN blur the result — blurring the alpha-only
+           mask before compositing produces a faint rectangular seam at the source
+           image's bounds in Chromium, so the feather happens post-composite instead -->
+      <feComposite in="SourceGraphic" in2="key" operator="in" result="cutout"/>
+      <feGaussianBlur in="cutout" stdDeviation="0.8" result="cutoutSoft"/>
+      <!-- subtle cool-shadow / warm-highlight grade to match the plate -->
+      <feColorMatrix in="cutoutSoft" type="matrix"
+        values="0.98 0 0 0 0.012
+                0 0.95 0 0 0.006
+                0 0 1.06 0 0.018
+                0 0 0 1 0"/>
+    </filter>
+  </defs>
+</svg>
+
+<a class="skip-link" href="#next-scene">Skip intro</a>
+
+<section id="hero" class="hero" aria-label="Anurag Patole — introduction">
+
+  <h1 class="visually-hidden" id="hero-h1"></h1>
+
+  <div class="hero-stage" id="heroStage">
+
+    <!-- 1. Background plate -->
+    <div class="layer plate-layer" data-depth="0.015" id="plateLayer">
+      <img id="plateImg" class="plate-img" src="" alt="" draggable="false">
+    </div>
+
+    <!-- 2. Fog layers -->
+    <div class="fog-wrap">
+      <div class="layer fog-layer fog-1" data-depth="0.03"></div>
+      <div class="layer fog-layer fog-2" data-depth="0.05"></div>
+      <div class="layer fog-layer fog-3" data-depth="0.02"></div>
+    </div>
+
+    <!-- Contact shadow the photo casts onto the wordmark / floor -->
+    <div class="layer contact-shadow" data-depth="0.05" id="contactShadow"></div>
+
+    <!-- 3. Wordmark -->
+    <div class="layer wordmark-layer" data-depth="0.09" id="wordmarkLayer">
+      <div class="wordmark-glow" id="wordmarkGlow" aria-hidden="true"></div>
+      <div class="wordmark" id="wordmark" aria-hidden="true"></div>
+    </div>
+
+    <!-- 4. Anurag -->
+    <div class="layer anurag-layer" data-depth="0.16" id="anuragLayer">
+      <div class="anurag-rim" aria-hidden="true"></div>
+      <div class="anurag-flip">
+        <img id="anuragImg" class="anurag-img" src="" alt="Anurag Patole" draggable="false">
+      </div>
+      <div class="anurag-floor-fade" aria-hidden="true"></div>
+    </div>
+
+    <!-- 5. Floating UI furniture -->
+    <div class="layer furniture-layer" data-depth="0.22" id="furnitureLayer">
+      <p class="welcome-line" id="welcomeLine" aria-hidden="true"></p>
+
+      <div class="pill pill-top-right" id="pillTopRight" aria-hidden="true"></div>
+      <div class="pill pill-bottom-left" id="pillBottomLeft" aria-hidden="true"></div>
+
+      <div class="arrow-rail arrow-rail-left" aria-hidden="true">
+        <span class="arrow arrow-down"></span>
+        <span class="arrow arrow-down"></span>
+        <span class="arrow arrow-down"></span>
+        <span class="arrow arrow-down"></span>
+      </div>
+      <div class="arrow-rail arrow-rail-right" aria-hidden="true">
+        <span class="arrow arrow-up"></span>
+        <span class="arrow arrow-up"></span>
+        <span class="arrow arrow-up"></span>
+        <span class="arrow arrow-up"></span>
+      </div>
+
+      <div class="dot-grid dot-grid-tl" aria-hidden="true"></div>
+      <div class="dot-grid dot-grid-br" aria-hidden="true"></div>
+    </div>
+
+    <!-- 6. Dust particles -->
+    <canvas class="dust-canvas" id="dustCanvas" aria-hidden="true"></canvas>
+
+    <!-- 7. Grain + vignette -->
+    <canvas class="grain-canvas" id="grainCanvas" aria-hidden="true"></canvas>
+    <div class="vignette" aria-hidden="true"></div>
+    <div class="scene-fade" id="sceneFade" aria-hidden="true"></div>
+  </div>
+
+  <!-- 8. Header -->
+  <header class="site-header" id="siteHeader">
+    <div class="header-line" id="headerLine" aria-hidden="true"></div>
+    <div class="header-inner">
+      <div class="brand" id="brandBlock">
+        <span class="brand-mark" id="brandMark"></span>
+        <span class="brand-divider" aria-hidden="true"></span>
+        <span class="brand-roles" id="brandRoles"></span>
+      </div>
+      <nav class="site-nav" id="siteNav" aria-label="Primary"></nav>
+      <button class="menu-btn" id="menuBtn" type="button" aria-expanded="false" aria-controls="mobileNav"></button>
+    </div>
+    <nav class="mobile-nav" id="mobileNav" aria-label="Primary mobile"></nav>
+  </header>
+
+  <div class="scroll-hint" id="scrollHint" aria-hidden="true">
+    <span class="scroll-hint-label"></span>
+    <span class="scroll-hint-line"></span>
+  </div>
+</section>
+
+<section id="next-scene" class="placeholder-section">
+  <p class="placeholder-label" id="placeholderLabel"></p>
+</section>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="js/config.js"></script>
+<script src="js/hero.js"></script>
+</body>
+</html>
