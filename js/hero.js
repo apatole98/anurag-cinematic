@@ -34,7 +34,6 @@
   var grainCanvas = document.getElementById("grainCanvas");
   var dotGridTL = document.querySelector(".dot-grid-tl");
   var dotGridBR = document.querySelector(".dot-grid-br");
-  var placeholderLabel = document.getElementById("placeholderLabel");
   var heroH1 = document.getElementById("hero-h1");
 
   // ---------------------------------------------------------------
@@ -65,15 +64,23 @@
     }
   }
 
-  function buildNav(container, tag) {
+  function buildNav(container) {
     container.innerHTML = "";
-    (cfg.header.nav || []).forEach(function (label) {
+    (cfg.header.nav || []).forEach(function (item) {
       var a = document.createElement("a");
-      a.href = "#";
-      a.textContent = label;
-      a.addEventListener("click", function (e) {
-        e.preventDefault();
-      });
+      var href = item.href || "#";
+      a.href = href;
+      a.textContent = item.label;
+      if (href === "#") {
+        a.addEventListener("click", function (e) {
+          e.preventDefault();
+        });
+      } else {
+        a.addEventListener("click", function () {
+          mobileNav.classList.remove("is-open");
+          menuBtn.setAttribute("aria-expanded", "false");
+        });
+      }
       container.appendChild(a);
     });
   }
@@ -87,7 +94,6 @@
     brandRoles.textContent = cfg.header.roles;
     menuBtn.textContent = cfg.header.menuLabel;
     document.querySelector(".scroll-hint-label").textContent = cfg.scrollHint;
-    placeholderLabel.textContent = cfg.placeholderSection.label + " — " + cfg.placeholderSection.note;
 
     buildNav(siteNav);
     buildNav(mobileNav);

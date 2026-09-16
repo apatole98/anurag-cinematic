@@ -12,6 +12,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <link rel="stylesheet" href="css/hero.css">
+<link rel="stylesheet" href="css/journey.css">
 </head>
 <body>
 
@@ -48,7 +49,22 @@
   </defs>
 </svg>
 
-<a class="skip-link" href="#next-scene">Skip intro</a>
+<a class="skip-link" href="#journey">Skip intro</a>
+
+<!-- Global header — persists above every scene -->
+<header class="site-header" id="siteHeader">
+  <div class="header-line" id="headerLine" aria-hidden="true"></div>
+  <div class="header-inner">
+    <div class="brand" id="brandBlock">
+      <span class="brand-mark" id="brandMark"></span>
+      <span class="brand-divider" aria-hidden="true"></span>
+      <span class="brand-roles" id="brandRoles"></span>
+    </div>
+    <nav class="site-nav" id="siteNav" aria-label="Primary"></nav>
+    <button class="menu-btn" id="menuBtn" type="button" aria-expanded="false" aria-controls="mobileNav"></button>
+  </div>
+  <nav class="mobile-nav" id="mobileNav" aria-label="Primary mobile"></nav>
+</header>
 
 <section id="hero" class="hero" aria-label="Anurag Patole — introduction">
 
@@ -119,34 +135,40 @@
     <div class="scene-fade" id="sceneFade" aria-hidden="true"></div>
   </div>
 
-  <!-- 8. Header -->
-  <header class="site-header" id="siteHeader">
-    <div class="header-line" id="headerLine" aria-hidden="true"></div>
-    <div class="header-inner">
-      <div class="brand" id="brandBlock">
-        <span class="brand-mark" id="brandMark"></span>
-        <span class="brand-divider" aria-hidden="true"></span>
-        <span class="brand-roles" id="brandRoles"></span>
-      </div>
-      <nav class="site-nav" id="siteNav" aria-label="Primary"></nav>
-      <button class="menu-btn" id="menuBtn" type="button" aria-expanded="false" aria-controls="mobileNav"></button>
-    </div>
-    <nav class="mobile-nav" id="mobileNav" aria-label="Primary mobile"></nav>
-  </header>
-
   <div class="scroll-hint" id="scrollHint" aria-hidden="true">
     <span class="scroll-hint-label"></span>
     <span class="scroll-hint-line"></span>
   </div>
 </section>
 
-<section id="next-scene" class="placeholder-section">
-  <p class="placeholder-label" id="placeholderLabel"></p>
+<!-- Scene 2 — Journey -->
+<section id="journey" class="journey" aria-labelledby="journey-title">
+  <div class="journey-bg" aria-hidden="true">
+    <div class="journey-fog journey-fog-1"></div>
+    <div class="journey-fog journey-fog-2"></div>
+    <div class="journey-grid"></div>
+  </div>
+
+  <div class="journey-inner">
+    <header class="journey-head">
+      <p class="journey-eyebrow" id="journeyEyebrow"></p>
+      <h2 class="journey-title" id="journey-title"></h2>
+      <p class="journey-intro" id="journeyIntro"></p>
+    </header>
+
+    <div class="timeline" id="timeline">
+      <div class="timeline-track" aria-hidden="true">
+        <div class="timeline-progress" id="timelineProgress"></div>
+      </div>
+      <ol class="timeline-list" id="timelineList"></ol>
+    </div>
+  </div>
 </section>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script src="js/config.js"></script>
 <script src="js/hero.js"></script>
+<script src="js/journey.js"></script>
 </body>
 </html>
